@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>我的第一篇博客 | Hexo</title>
+  <title>FreeCodeCamp刷题笔记（二） | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="初创hexo博客">
+  <meta name="description" content="正则表达式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇博客">
-<meta property="og:url" content="http://example.com/2022/06/05/hello-world/index.html">
+<meta property="og:title" content="FreeCodeCamp刷题笔记（二）">
+<meta property="og:url" content="http://example.com/2022/08/01/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="初创hexo博客">
+<meta property="og:description" content="正则表达式">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-05T05:14:22.000Z">
-<meta property="article:modified_time" content="2023-02-25T04:15:53.222Z">
+<meta property="article:published_time" content="2022-08-01T06:31:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T09:04:31.043Z">
 <meta property="article:author" content="Codebeyound">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary">
@@ -227,14 +227,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-FreeCodeCamp刷题笔记（二）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      我的第一篇博客
+      FreeCodeCamp刷题笔记（二）
     </h1>
   
 
@@ -246,8 +246,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2022/06/05/hello-world/" class="archive-article-date">
-        <time datetime="2022-06-05T05:14:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-05</time>
+<a href="/2022/08/01/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
+        <time datetime="2022-08-01T06:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-01</time>
 </a>
 
   
@@ -260,7 +260,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">185字</span>
+      <span class="post-count">1.5k字</span>
     </span>
   </span>
 
@@ -269,7 +269,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">6分</span>
     </span>
   </span>
 </div>
@@ -280,15 +280,80 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="初创hexo博客"><a href="#初创hexo博客" class="headerlink" title="初创hexo博客"></a>初创hexo博客</h1><span id="more"></span>
+    <h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><span id="more"></span>
 
-<h2 id="构建hexo博客"><a href="#构建hexo博客" class="headerlink" title="构建hexo博客"></a>构建hexo博客</h2><h4 id="软件准备-安装-调试"><a href="#软件准备-安装-调试" class="headerlink" title="软件准备 安装 调试"></a>软件准备 安装 调试</h4><p>git和node的下载安装及配置 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">淘宝镜像源的配置</span><br><span class="line">github账号注册</span><br></pre></td></tr></table></figure>
+<h3 id="匹配多个字符串"><a href="#匹配多个字符串" class="headerlink" title="匹配多个字符串  |"></a>匹配多个字符串  |</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let petString = &quot;James has a pet cat.&quot;;</span><br><span class="line">let petRegex = /dog|cat|bird/; // 修改这一行</span><br><span class="line">let result = petRegex.test(petString);</span><br></pre></td></tr></table></figure>
 
-<h4 id="git中安装hexo框架"><a href="#git中安装hexo框架" class="headerlink" title="git中安装hexo框架"></a>git中安装hexo框架</h4><p>安装后进行初始化操作最后本地端口预览 </p>
-<h4 id="hexo博客的深化操作"><a href="#hexo博客的深化操作" class="headerlink" title="hexo博客的深化操作"></a>hexo博客的深化操作</h4><p>具体步骤见超链接 </p>
-<h3 id="构建博客过程遇到的问题及自我感受"><a href="#构建博客过程遇到的问题及自我感受" class="headerlink" title="构建博客过程遇到的问题及自我感受"></a>构建博客过程遇到的问题及自我感受</h3><p>第一次构建疏忽了库的初始化，导致进行到部署时一直出错。导致浪费了大量时间重新开始构建，所以构成过程应该是一鼓作气的，分阶段的话容易有遗漏的地方，使后面一起出错。 </p>
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p>[b站up主] (<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pt411K7o9?p=6">https://www.bilibili.com/video/BV1pt411K7o9?p=6</a>) </p>
+
+
+<h3 id="匹配时忽略大小写-i"><a href="#匹配时忽略大小写-i" class="headerlink" title="匹配时忽略大小写  i"></a>匹配时忽略大小写  i</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let myString = &quot;freeCodeCamp&quot;;</span><br><span class="line">let fccRegex = /freeCodeCamp/i; // 修改这一行</span><br><span class="line">let result = fccRegex.test(myString);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="match-语法、-test语法区分"><a href="#match-语法、-test语法区分" class="headerlink" title=".match 语法、.test语法区分"></a>.match 语法、.test语法区分</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27;string&#x27;.match(/regex/);</span><br><span class="line">/regex/.test(&#x27;string&#x27;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="全局匹配-g"><a href="#全局匹配-g" class="headerlink" title="全局匹配  g"></a>全局匹配  g</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let twinkleStar = &quot;Twinkle, twinkle, little star&quot;;</span><br><span class="line">let starRegex = /Twinkle/ig; // 修改这一行</span><br><span class="line">let result = twinkleStar.match(starRegex); // 修改这一行</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集  [ ]"></a>字符集  [ ]</h3><p>可以使用字符集 （character classes）更灵活的匹配字符。 可以把字符集放在方括号（[ 和 ]）之间来定义一组需要匹配的字符串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let bugStr = &quot;bug&quot;;</span><br><span class="line">let bogStr = &quot;bog&quot;;</span><br><span class="line">let bgRegex = /b[aiu]g/;</span><br><span class="line">bigStr.match(bgRegex);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="匹配大量字符"><a href="#匹配大量字符" class="headerlink" title="匹配大量字符  -"></a>匹配大量字符  -</h3><p>有时需要匹配大量字符（例如，字母表中的每个字母）。 有一种写法可以让实现这个功能变得简短。在字符集中，可以使用连字符（-）来定义要匹配的字符范围。</p>
+<h3 id="匹配出现一次或多次的字符-x2F-s-x2F-g"><a href="#匹配出现一次或多次的字符-x2F-s-x2F-g" class="headerlink" title="匹配出现一次或多次的字符  &#x2F;s+&#x2F;g"></a>匹配出现一次或多次的字符  &#x2F;s+&#x2F;g</h3><h3 id="匹配出现零次或多次的字符-x2F-Aa-x2F-g"><a href="#匹配出现零次或多次的字符-x2F-Aa-x2F-g" class="headerlink" title="匹配出现零次或多次的字符  &#x2F;Aa*&#x2F;g"></a>匹配出现零次或多次的字符  &#x2F;Aa*&#x2F;g</h3><h3 id="论惰性匹配和贪婪匹配"><a href="#论惰性匹配和贪婪匹配" class="headerlink" title="论惰性匹配和贪婪匹配"></a>论惰性匹配和贪婪匹配</h3><p>正则表达式默认是贪婪匹配，因此匹配返回为 <code>[&quot;titani&quot;]</code>。 它会匹配到适合该匹配模式的最大子字符串。</p>
+<p>但是，你可以使用 <code>?</code> 字符来将其变成懒惰匹配。 调整后的正则表达式 <code>/t[a-z]*?i/</code> 匹配字符串 <code>&quot;titanic&quot;</code> 返回 <code>[&quot;ti&quot;]</code>。</p>
+<h3 id="匹配字符串的开头"><a href="#匹配字符串的开头" class="headerlink" title="匹配字符串的开头  ^"></a>匹配字符串的开头  ^</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let rickyAndCal = &quot;Cal and Ricky both like racing.&quot;;</span><br><span class="line">let calRegex = /^Cal/; </span><br><span class="line">let result = calRegex.test(rickyAndCal); //true</span><br></pre></td></tr></table></figure>
+
+<h3 id="匹配字符串的末尾-let-lastRegex-x3D-x2F-caboose-x2F"><a href="#匹配字符串的末尾-let-lastRegex-x3D-x2F-caboose-x2F" class="headerlink" title="匹配字符串的末尾  let lastRegex &#x3D; &#x2F;caboose$&#x2F;"></a>匹配字符串的末尾  let lastRegex &#x3D; &#x2F;caboose$&#x2F;</h3><h3 id="匹配所有的字母和数字-w"><a href="#匹配所有的字母和数字-w" class="headerlink" title="匹配所有的字母和数字  \w"></a>匹配所有的字母和数字  \w</h3><p>使用元字符，可以使用 [a-z] 搜寻字母表中的所有字母。 这种元字符是很常见的，它有一个缩写，但这个缩写也包含额外的字符下划线。元字符\w等同于[A-Za-z0-9_]。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let quoteSample = &quot;The five boxing wizards jump quickly.&quot;;</span><br><span class="line">let alphabetRegexV2 = /\w/g;</span><br><span class="line">let result = quoteSample.match(alphabetRegexV2).length;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="匹配除了字母和数字的所有符号-W"><a href="#匹配除了字母和数字的所有符号-W" class="headerlink" title="匹配除了字母和数字的所有符号  \W"></a>匹配除了字母和数字的所有符号  \W</h3><p>元字符\W等同于**[^A-Za-z0-9_]** 。</p>
+<h3 id="匹配所有数字-d"><a href="#匹配所有数字-d" class="headerlink" title="匹配所有数字  \d"></a>匹配所有数字  \d</h3><p>等同于元字符 [0-9]，它查找 0 到 9 之间任意数字的单个字符。</p>
+<h3 id="匹配非数字字符-D"><a href="#匹配非数字字符-D" class="headerlink" title="匹配非数字字符 \D"></a>匹配非数字字符 \D</h3><p>查找非数字字符的缩写是 \D。 这等同于字符串 [^0-9]，它查找不是 0 - 9 之间数字的单个字符。</p>
+<h3 id="限制用户名"><a href="#限制用户名" class="headerlink" title="限制用户名"></a>限制用户名</h3><p>需要检索数据库中的所有用户名。 以下是用户在创建用户名时必须遵守的一些简单规则。</p>
+<p>用户名只能是数字字母字符。</p>
+<p>用户名中的数字必须在最后。 数字可以有零个或多个。 用户名不能以数字开头。</p>
+<p>用户名字母可以是小写字母和大写字母。</p>
+<p>用户名长度必须至少为两个字符。 两位用户名只能使用字母。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let username = &quot;JackOfAllTrades&quot;;</span><br><span class="line">let userCheck = /^[a-z]([0-9][0-9]+|[a-z]+\d*)$/i;// 修改这一行</span><br><span class="line">let result = userCheck.test(username);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="匹配空白字符-s"><a href="#匹配空白字符-s" class="headerlink" title="匹配空白字符  \s"></a>匹配空白字符  \s</h3><p>可以使用 \s 搜寻空格，其中 s 是小写。 此匹配模式将匹配空格、回车符、制表符、换页符和换行符。 可以认为这类似于元字符 [\r\t\f\n\v]。</p>
+<h3 id="匹配非空白字符-S"><a href="#匹配非空白字符-S" class="headerlink" title="匹配非空白字符  \S"></a>匹配非空白字符  \S</h3><p>类似于元字符 **[^\r\t\f\n\v]**。</p>
+<h3 id="检查全部或无"><a href="#检查全部或无" class="headerlink" title="检查全部或无"></a>检查全部或无</h3><p>可以使用问号 ? 指定可能存在的元素。 这将检查前面的零个或一个元素。 可以将此符号视为前面的元素是可选的。场景：美英单词拼写可能会有所不同。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let favWord = &quot;favorite&quot;;</span><br><span class="line">let favRegex = /favou?rite/; // 修改这一行</span><br><span class="line">let result = favRegex.test(favWord);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="正向先行断言"><a href="#正向先行断言" class="headerlink" title="正向先行断言"></a>正向先行断言</h3><p>正向先行断言会查看并确保搜索匹配模式中的元素存在，但实际上并不匹配。 正向先行断言的用法是 (?&#x3D;…)，其中 … 就是需要存在但不会被匹配的部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let sampleWord = &quot;12345&quot;;</span><br><span class="line">let pwRegex = /(?=[a-z])(?=\D*\d&#123;2,&#125;)/i; // 修改这一行</span><br><span class="line">let result = pwRegex.test(sampleWord);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用捕获组重用模式"><a href="#使用捕获组重用模式" class="headerlink" title="使用捕获组重用模式"></a>使用捕获组重用模式</h3><p>捕获组是通过把要捕获的正则表达式放在括号中来构建的。 在这个例子里， 目标是捕获一个包含字母数字字符的词，所以捕获组是将 <code>\w+</code> 放在括号中：<code>/(\w+)/</code>。</p>
+<p>分组匹配的子字符串被保存到一个临时的“变量”， 可以使用同一正则表达式和反斜线及捕获组的编号来访问它（例如：<code>\1</code>）。 捕获组按其开头括号的位置自动编号（从左到右），从 1 开始。</p>
+<p>在 <code>reRegex</code> 中使用捕获组来匹配一个只由相同的数字重复三次组成的由空格分隔字符串 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let repeatNum = &quot;42 42 42&quot;;</span><br><span class="line">let reRegex = /^(\d+) \1 \1$/; // 修改这一行</span><br><span class="line">let result = reRegex.test(repeatNum);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用捕获组搜索和替换"><a href="#使用捕获组搜索和替换" class="headerlink" title="使用捕获组搜索和替换"></a>使用捕获组搜索和替换</h3><p>可以在字符串上使用 .replace() 方法来搜索并替换字符串中的文本。 .replace() 的输入首先是想要搜索的正则表达式匹配模式。 第二个参数是用于替换匹配的字符串或用于执行某些操作的函数。使用美元符号（$）语法在替换字符串中使用捕获组。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let str = &quot;one two three&quot;;</span><br><span class="line">let fixRegex = /(\w+)\s(\w+)\s(\w+)/; // 修改这一行</span><br><span class="line">let replaceText = &quot;$3 $2 $1&quot;; // 修改这一行</span><br><span class="line">let result = str.replace(fixRegex, replaceText);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除开头和结尾的空白"><a href="#删除开头和结尾的空白" class="headerlink" title="删除开头和结尾的空白"></a>删除开头和结尾的空白</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let hello = &quot;   Hello, World!  &quot;;</span><br><span class="line">let wsRegex = /^\s+|\s+$/g; // 修改这一行</span><br><span class="line">let result = hello.replace(wsRegex,&#x27;&#x27;); // 修改这一行</span><br></pre></td></tr></table></figure>
+
+<h3 id="检查混合字符组"><a href="#检查混合字符组" class="headerlink" title="检查混合字符组"></a>检查混合字符组</h3><p>有时候我们想使用正则表达式里的括号 <code>()</code> 来检查字符组。</p>
+<p>如果想在字符串找到 <code>Penguin</code> 或 <code>Pumpkin</code>，可以用这个正则表达式：<code>/P(engu|umpk)in/g</code>。</p>
+<p>完善正则表达式，使其以区分大小写的方式检查 <code>Franklin Roosevelt</code> 或 <code>Eleanor Roosevelt</code> 的名字，并且应该忽略 middle names。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let myString = &quot;Eleanor Roosevelt&quot;;</span><br><span class="line">let myRegex = /^(Franklin|Eleanor).*? Roosevelt/; // 修改这一行</span><br><span class="line">let result = myRegex.test(myString); // 修改这一行</span><br></pre></td></tr></table></figure>
+
 
     
 
@@ -393,7 +458,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/06/05/hello-world/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/08/01/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -408,15 +473,11 @@
 
 <nav id="article-nav">
   
-    <a href="/2022/07/25/freeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          FreeCodeCamp刷题笔记（一）
-        
-      </div>
-    </a>
   
+    <a href="/2022/07/25/freeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FreeCodeCamp刷题笔记（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -455,9 +516,9 @@
     <script src="/lib/gitment.js"></script>
   
   <script>
-    <!-- id: "我的第一篇博客" -->
+    <!-- id: "FreeCodeCamp刷题笔记（二）" -->
     var gitment = new Gitment({
-      id: "20220605131422",
+      id: "20220801143100",
       owner: 'kaifagi',
       repo: 'yilia-plus-demo',
       oauth: {
