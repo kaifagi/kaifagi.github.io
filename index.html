@@ -73,13 +73,11 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/" target="_blank">主页</a></li>
+				<li><a target="_blank" rel="noopener" href="https://kaifagi.github.io" >主页</a></li>
 			
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/" target="_blank">随笔</a></li>
+				<li><a href="/tags/%E7%AC%94%E8%AE%B0/" >笔记</a></li>
 			
-				<li><a href="/" target="_blank">分类</a></li>
-			
-				<li><a href="/archives/index,html" target="_blank">归档</a></li>
+				<li><a href="/archives/index.html" >归档</a></li>
 			
 			</ul>
 		</nav>
@@ -102,23 +100,23 @@
 			<div class="social">
 				
 					
-						<a class="github" href="https://github.com/kaifagi" 
-												title="GitHub" target="_blank"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" rel="noopener" href="https://github.com/kaifagi" 
+												title="GitHub" ><i class="icon-github"></i></a>
 					
 				
 					
 						<a class="qq" href="/img/924837582.jpg" 
-												title="QQ" target="_blank"><i class="icon-qq"></i></a>
+												title="QQ" ><i class="icon-qq"></i></a>
 					
 				
 					
 						<a class="weixin" href="/img/weixin_.jpg" 
-												title="wechat" target="_blank"><i class="icon-weixin"></i></a>
+												title="wechat" ><i class="icon-weixin"></i></a>
 					
 				
 					
 						<a class="mail" href="mailto:924837582@qq.com" 
-												title="Email" target="_blank"><i class="icon-mail"></i></a>
+												title="Email" ><i class="icon-mail"></i></a>
 					
 				
 			</div>
@@ -170,8 +168,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -204,13 +200,11 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a target="_blank" rel="noopener" href="https://kaifagi.github.io">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a></li>
 		        
-					<li style="width: 25%"><a href="/">分类</a></li>
-		        
-					<li style="width: 25%"><a href="/archives/index,html">归档</a></li>
+					<li style="width: 33.333333333333336%"><a href="/archives/index.html">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -227,6 +221,101 @@
           </div>
           <div id="js-content" class="content-ll">
             
+
+  
+    <article id="post-FreeCodeCamp刷题笔记（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/08/15/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" target="_blank">FreeCodeCamp刷题笔记（三）</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/08/15/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
+        <time datetime="2023-08-15T10:37:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-08-15</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="基础数据结构"><a href="#基础数据结构" class="headerlink" title="基础数据结构"></a>基础数据结构</h2><h3 id="splice"><a href="#splice" class="headerlink" title="splice()"></a><strong>splice()</strong></h3><p><code>splice()</code> 最多可以接受 3 个参数，第一个参数代表从数组中的哪个索引开始移除元素，而第二个参数表示要从数组中的这个位置开始删除多少个元素，第三个参数可以是一个或多个元素，这些元素会被添加到数组中。 </p>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice()"></a><strong>slice()</strong></h3><p><code>slice()</code> 不会修改数组，而是会复制出一个新数组。 <code>slice()</code> 只接收 2 个输入参数：第一个是开始提取元素的位置（索引），第二个是提取元素的结束位置（索引）。 提取的元素中不包括第二个参数所对应的元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">forecast</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> newArr=arr.<span class="title function_">slice</span>(<span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">  <span class="keyword">return</span> newArr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">forecast</span>([<span class="string">&#x27;cold&#x27;</span>, <span class="string">&#x27;rainy&#x27;</span>, <span class="string">&#x27;warm&#x27;</span>, <span class="string">&#x27;sunny&#x27;</span>, <span class="string">&#x27;cool&#x27;</span>, <span class="string">&#x27;thunderstorms&#x27;</span>]));</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用展开运算符复制数组"><a href="#使用展开运算符复制数组" class="headerlink" title="使用展开运算符复制数组"></a>使用展开运算符复制数组</h3><p>我们已经定义了一个 <code>copyMachine</code> 函数，它接受 <code>arr</code>（一个数组）和 <code>num</code>（一个数字）作为输入参数。 该函数需要返回一个由 <code>num</code> 个 <code>arr</code> 组成的新的二维数组。 同时，我们写好了大致的流程，只是细节实现还没有写完。 请修改这个函数，使用展开语法，使该函数能正常工作 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">copyMachine</span>(<span class="params">arr, num</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> newArr = [];</span><br><span class="line">  <span class="keyword">while</span> (num &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">// 只修改这一行下面的代码</span></span><br><span class="line">    newArr.<span class="title function_">push</span>([...arr]);</span><br><span class="line">    <span class="comment">// 只修改这一行上面的代码</span></span><br><span class="line">    num--;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newArr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">copyMachine</span>([<span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>], <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-for-循环遍历数组中的全部元素"><a href="#使用-for-循环遍历数组中的全部元素" class="headerlink" title="使用 for 循环遍历数组中的全部元素"></a>使用 for 循环遍历数组中的全部元素</h3><p>我们已经定义了 <code>filteredArray</code> 函数，它接受一个嵌套的数组 <code>arr</code> 和一个 <code>elem</code> 作为参数，并要返回一个新数组。 <code>arr</code> 数组中嵌套的数组里可能包含 <code>elem</code> 元素，也可能不包含。 请修改该函数，用一个 <code>for</code> 循环来做筛选，使函数返回一个由 <code>arr</code> 中不包含 <code>elem</code> 的数组所组成的新数组。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">filteredArray</span>(<span class="params">arr, elem</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> newArr = [];</span><br><span class="line">  <span class="comment">// 只修改这一行下面的代码</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; arr.<span class="property">length</span> ;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(arr[i].<span class="title function_">indexOf</span>(elem) == -<span class="number">1</span>)&#123;</span><br><span class="line">      newArr.<span class="title function_">push</span>(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 只修改这一行上面的代码</span></span><br><span class="line">  <span class="keyword">return</span> newArr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">filteredArray</span>([[<span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">6</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">13</span>, <span class="number">26</span>], [<span class="number">19</span>, <span class="number">3</span>, <span class="number">9</span>]], <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/08/15/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
 
   
     <article id="post-每日进阶" class="article article-type-post  article-index" itemscope itemprop="blogPost">
