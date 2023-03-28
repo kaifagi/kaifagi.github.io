@@ -6,26 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>每日进阶 | Hexo</title>
+  <title>Archives: 2023 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="WeakMap 和 Map 的区别，WeakMap 原理，为什么能被 GC？">
-<meta property="og:type" content="article">
-<meta property="og:title" content="每日进阶">
-<meta property="og:url" content="http://example.com/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/archives/2023/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="WeakMap 和 Map 的区别，WeakMap 原理，为什么能被 GC？">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://resource.muyiy.cn/image/20210407230204.gif">
-<meta property="og:image" content="http://resource.muyiy.cn/image/20210407235322.png">
-<meta property="og:image" content="http://resource.muyiy.cn/image/20210407235841.png">
-<meta property="article:published_time" content="2022-12-22T06:34:12.000Z">
-<meta property="article:modified_time" content="2023-03-28T06:56:17.168Z">
 <meta property="article:author" content="Codebeyound">
-<meta property="article:tag" content="前端进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://resource.muyiy.cn/image/20210407230204.gif">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -235,177 +226,41 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-每日进阶-3" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" class="archive-article-date">
+        <time datetime="2023-01-12T10:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-12</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" target="_blank">每日进阶</a>
   
-    <h1 class="article-title" itemprop="name">
-      每日进阶
     </h1>
   
 
 
-  
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/" class="archive-article-date">
-        <time datetime="2022-12-22T06:34:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-22</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.7k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="WeakMap-和-Map-的区别，WeakMap-原理，为什么能被-GC？"><a href="#WeakMap-和-Map-的区别，WeakMap-原理，为什么能被-GC？" class="headerlink" title="WeakMap 和 Map 的区别，WeakMap 原理，为什么能被 GC？"></a>WeakMap 和 Map 的区别，WeakMap 原理，为什么能被 GC？</h1><span id="more"></span>
-
-<h2 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h2><p>我们知道，程序运行中会有一些垃圾数据不再使用，需要及时释放出去，如果我们没有及时释放，这就是内存泄露</p>
-<p>JS 中的垃圾数据都是由垃圾回收（Garbage Collection，缩写为 GC）器自动回收的，不需要手动释放，它是如何做的喃？</p>
-<p>很简单，JS 引擎中有一个后台进程称为垃圾回收器，它监视所有对象，观察对象是否可被访问，然后按照固定的时间间隔周期性的删除掉那些不可访问的对象即可</p>
-<p>现在各大浏览器通常用采用的垃圾回收有两种方法：</p>
-<ul>
-<li>引用计数</li>
-<li>标记清除</li>
-</ul>
-<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>最早最简单的垃圾回收机制，就是给一个占用物理空间的对象附加一个引用计数器，当有其它对象引用这个对象时，这个对象的引用计数加一，反之解除时就减一，当该对象引用计数为 0 时就会被回收。</p>
-<p>该方式很简单，但会引起内存泄漏：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 循环引用的问题</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">temp</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> a=&#123;&#125;;</span><br><span class="line">    <span class="keyword">var</span> b=&#123;&#125;;</span><br><span class="line">    a.<span class="property">o</span> = b;</span><br><span class="line">    b.<span class="property">o</span> = a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这种情况下每次调用 <code>temp</code> 函数，<code>a</code> 和 <code>b</code> 的引用计数都是 <code>2</code> ，会使这部分内存永远不会被释放，即内存泄漏。现在已经很少使用了，只有低版本的 IE 使用这种方式。</p>
-<h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>V8 中主垃圾回收器就采用标记清除法进行垃圾回收。主要流程如下：</p>
-<ul>
-<li>标记：遍历调用栈，看老生代区域堆中的对象是否被引用，被引用的对象标记为活动对象，没有被引用的对象（待清理）标记为垃圾数据。</li>
-<li>垃圾清理：将所有垃圾数据清理掉</li>
-</ul>
-<p> <img src="http://resource.muyiy.cn/image/20210407230204.gif"></p>
-<p>（图片来源：How JavaScript works: memory management + how to handle 4 common memory leaks） </p>
-<p>在我们的开发过程中，如果我们想要让垃圾回收器回收某一对象，就将对象的引用直接设置为 <code>null</code> </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;&#125;; <span class="comment">// &#123;&#125; 可访问，a 是其引用</span></span><br><span class="line"></span><br><span class="line">a = <span class="literal">null</span>; <span class="comment">// 引用设置为 null</span></span><br><span class="line"><span class="comment">// &#123;&#125; 将会被从内存里清理出去</span></span><br></pre></td></tr></table></figure>
-
-<p>但如果一个对象被多次引用时，例如作为另一对象的键、值或子元素时，将该对象引用设置为 <code>null</code> 时，该对象是不会被回收的，依然存在 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;&#125;; </span><br><span class="line"><span class="keyword">var</span> arr = [a];</span><br><span class="line"></span><br><span class="line">a = <span class="literal">null</span>; </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr)</span><br><span class="line"><span class="comment">// [&#123;&#125;]</span></span><br></pre></td></tr></table></figure>
-
-<p>如果作为 <code>Map</code> 的键喃？ </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;&#125;; </span><br><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">map.<span class="title function_">set</span>(a, <span class="string">&#x27;三分钟学前端&#x27;</span>)</span><br><span class="line"></span><br><span class="line">a = <span class="literal">null</span>; </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map.<span class="title function_">keys</span>()) <span class="comment">// MapIterator &#123;&#123;&#125;&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map.<span class="title function_">values</span>()) <span class="comment">// MapIterator &#123;&quot;三分钟学前端&quot;&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果想让 a 置为 <code>null</code> 时，该对象被回收，该怎么做喃 </p>
-<h2 id="WeakMap-vs-Map"><a href="#WeakMap-vs-Map" class="headerlink" title="WeakMap vs Map"></a>WeakMap vs Map</h2><p>ES6 考虑到了这一点，推出了： <code>WeakMap</code> 。它对于值的引用都是不计入垃圾回收机制的，所以名字里面才会有一个”Weak”，表示这是弱引用（对对象的弱引用是指当该对象应该被GC回收时不会阻止GC的回收行为）。</p>
-<p><code>Map</code> 相对于 <code>WeakMap</code> ：</p>
-<ul>
-<li><code>Map</code> 的键可以是任意类型，<code>WeakMap</code> 只接受对象作为键（null除外），不接受其他类型的值作为键</li>
-<li><code>Map</code> 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键； <code>WeakMap</code> 的键是弱引用，键所指向的对象可以被垃圾回收，此时键是无效的</li>
-<li><code>Map</code> 可以被遍历， <code>WeakMap</code> 不能被遍历</li>
-</ul>
-<p>下面以 <code>WeakMap</code> 为例，看看它是怎么解决上面问题的：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;&#125;; </span><br><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> <span class="title class_">WeakMap</span>();</span><br><span class="line">map.<span class="title function_">set</span>(a, <span class="string">&#x27;三分钟学前端&#x27;</span>)</span><br><span class="line">map.<span class="title function_">get</span>(a)</span><br><span class="line"></span><br><span class="line">a = <span class="literal">null</span>; </span><br></pre></td></tr></table></figure>
-
-<p>上例并不能看出什么？我们通过 <code>process.memoryUsage</code> 测试一下： </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//map.js</span></span><br><span class="line"><span class="variable language_">global</span>.<span class="title function_">gc</span>(); <span class="comment">// 0 每次查询内存都先执行gc()再memoryUsage()，是为了确保垃圾回收，保证获取的内存使用状态准确</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">usedSize</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> used = process.<span class="title function_">memoryUsage</span>().<span class="property">heapUsed</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">round</span>((used / <span class="number">1024</span> / <span class="number">1024</span>) * <span class="number">100</span>) / <span class="number">100</span> + <span class="string">&quot;M&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">usedSize</span>()); <span class="comment">// 1 初始状态，执行gc()和memoryUsage()以后，heapUsed 值为 1.64M</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">set</span>(b, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">global</span>.<span class="title function_">gc</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">usedSize</span>()); <span class="comment">// 2 在 Map 中加入元素b，为一个 5*1024*1024 的数组后，heapUsed为41.82M左右</span></span><br><span class="line"></span><br><span class="line">b = <span class="literal">null</span>;</span><br><span class="line"><span class="variable language_">global</span>.<span class="title function_">gc</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">usedSize</span>()); <span class="comment">// 3 将b置为空以后，heapUsed 仍为41.82M，说明Map中的那个长度为5*1024*1024的数组依然存在</span></span><br></pre></td></tr></table></figure>
-
-<p>执行 <code>node --expose-gc map.js</code> 命令： </p>
-<p><img src="http://resource.muyiy.cn/image/20210407235322.png"></p>
-<p>其中，<code>--expose-gc</code> 参数表示允许手动执行垃圾回收机制 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// weakmap.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">usedSize</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> used = process.<span class="title function_">memoryUsage</span>().<span class="property">heapUsed</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">round</span>((used / <span class="number">1024</span> / <span class="number">1024</span>) * <span class="number">100</span>) / <span class="number">100</span> + <span class="string">&quot;M&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">global</span>.<span class="title function_">gc</span>(); <span class="comment">// 0 每次查询内存都先执行gc()再memoryUsage()，是为了确保垃圾回收，保证获取的内存使用状态准确</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">usedSize</span>()); <span class="comment">// 1 初始状态，执行gc()和 memoryUsage()以后，heapUsed 值为 1.64M</span></span><br><span class="line"><span class="keyword">var</span> map = <span class="keyword">new</span> <span class="title class_">WeakMap</span>();</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">set</span>(b, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">global</span>.<span class="title function_">gc</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">usedSize</span>()); <span class="comment">// 2 在 Map 中加入元素b，为一个 5*1024*1024 的数组后，heapUsed为41.82M左右</span></span><br><span class="line"></span><br><span class="line">b = <span class="literal">null</span>;</span><br><span class="line"><span class="variable language_">global</span>.<span class="title function_">gc</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">usedSize</span>()); <span class="comment">// 3 将b置为空以后，heapUsed 变成了1.82M左右，说明WeakMap中的那个长度为5*1024*1024的数组被销毁了</span></span><br></pre></td></tr></table></figure>
-
-<p>执行 <code>node --expose-gc weakmap.js</code> 命令： </p>
-<p><img src="http://resource.muyiy.cn/image/20210407235841.png"></p>
-<p>上面代码中，只要外部的引用消失，WeakMap 内部的引用，就会自动被垃圾回收清除。由此可见，有了它的帮助，解决内存泄漏就会简单很多。</p>
-<p>最后看一下 <code>WeakMap</code></p>
-<h3 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h3><p>WeakMap 对象是一组键值对的集合，其中的<strong>键是弱引用对象，而值可以是任意</strong>。</p>
-<p><strong>注意，WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。</strong></p>
-<p>WeakMap 中，每个键对自己所引用对象的引用都是弱引用，在没有其他引用和该键引用同一对象，这个对象将会被垃圾回收（相应的key则变成无效的），所以，WeakMap 的 key 是不可枚举的。</p>
-<p>属性：</p>
-<ul>
-<li>constructor：构造函数</li>
-</ul>
-<p>方法：</p>
-<ul>
-<li><p>has(key)：判断是否有 key 关联对象</p>
-</li>
-<li><p>get(key)：返回key关联对象（没有则则返回 undefined）</p>
-</li>
-<li><p>set(key)：设置一组key关联对象</p>
-</li>
-<li><p>delete(key)：移除 key 的关联对象</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myElement = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;logo&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> myWeakmap = <span class="keyword">new</span> <span class="title class_">WeakMap</span>();</span><br><span class="line"></span><br><span class="line">myWeakmap.<span class="title function_">set</span>(myElement, &#123;<span class="attr">timesClicked</span>: <span class="number">0</span>&#125;);</span><br><span class="line"></span><br><span class="line">myElement.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> logoData = myWeakmap.<span class="title function_">get</span>(myElement);</span><br><span class="line">  logoData.<span class="property">timesClicked</span>++;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
-
-<p>除了 <code>WeakMap</code> 还有 <code>WeakSet</code> 都是弱引用，可以被垃圾回收机制回收，可以用来保存DOM节点，不容易造成内存泄漏 。</p>
-</li>
-</ul>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>Thanks<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/alipay.jpg">
-                    <span class="reward-type">支付宝</span>
-                  </div>
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/weixin.jpg">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -417,139 +272,19 @@
 		</ul>
 	</div>
 
-    
+          
 
-    
-
-    
-    
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a> -->
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/" alt="微信分享二维码"> -->
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-
-    
-    <div class="clearfix"></div>
-  </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          每日进阶
-        
-      </div>
-    </a>
   
   
-    <a href="/2022/11/04/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">FreeCodeCamp刷题笔记（五）</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-  
-  <div id="gitment-ctn"></div>
-  
-    <!-- 中文 -->
-    <link rel="stylesheet" href="/lib/gitment.css">
-    <script src="/lib/gitment.js"></script>
-  
-  <script>
-    <!-- id: "每日进阶" -->
-    var gitment = new Gitment({
-      id: "20221222143412",
-      owner: 'kaifagi',
-      repo: 'yilia-plus-demo',
-      oauth: {
-        client_id: 'a08bcf21b1f6cc374051',
-        client_secret: 'cb1e64f131a1ff84f4db37041d37b2c2864206e6',
-      },
-    })
-    gitment.render('gitment-ctn')
-  </script>
-
-
+    </div></section>
   
 
+    
 
 
           </div>
@@ -590,8 +325,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
