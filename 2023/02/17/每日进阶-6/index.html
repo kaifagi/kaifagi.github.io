@@ -6,16 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | Hexo</title>
+  <title>每日进阶 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="由一道bilibili面试题看Promise异步执行机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日进阶">
+<meta property="og:url" content="http://example.com/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="由一道bilibili面试题看Promise异步执行机制">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-16T17:10:58.000Z">
+<meta property="article:modified_time" content="2023-04-02T17:29:09.215Z">
 <meta property="article:author" content="Codebeyound">
+<meta property="article:tag" content="前端进阶">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -226,41 +231,230 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-每日进阶-6" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+    <h1 class="article-title" itemprop="name">
+      每日进阶
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/" class="archive-article-date">
         <time datetime="2023-02-16T17:10:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-17</time>
 </a>
 
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">8分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="由一道bilibili面试题看Promise异步执行机制"><a href="#由一道bilibili面试题看Promise异步执行机制" class="headerlink" title="由一道bilibili面试题看Promise异步执行机制"></a>由一道bilibili面试题看Promise异步执行机制</h1><span id="more"></span>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="title class_">Date</span>() </span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date) </span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date)</span><br><span class="line">&#125;, <span class="number">500</span>) </span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date)) </span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">new</span> <span class="title class_">Date</span>() - date &lt; <span class="number">1000</span>) &#123;&#125; </span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date)</span><br></pre></td></tr></table></figure>
+
+<p>求上面的输出顺序和输出值，为什么？</p>
+<p><strong>答案：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 0</span><br><span class="line">3 1</span><br><span class="line">4 1000</span><br><span class="line">2 1000</span><br></pre></td></tr></table></figure>
+
+<p>其中，关于时间差结果可能因为计算机性能造成的微小差异，可忽略不计</p>
+<p>你答对了吗？下面我们由浅入深探索本题</p>
+<h2 id="由浅入深探索-Promise-异步执行"><a href="#由浅入深探索-Promise-异步执行" class="headerlink" title="由浅入深探索 Promise 异步执行"></a>由浅入深探索 Promise 异步执行</h2><p>首先，看一下 <code>event loop</code> 的基础必备内容</p>
+<p><code>event loop</code> 执行顺序：</p>
+<ul>
+<li>首先执行 <code>script</code> 宏任务</li>
+<li>执行同步任务，遇见微任务进入微任务队列，遇见宏任务进入宏任务队列</li>
+<li>当前宏任务执行完出队，检查微任务列表，有则依次执行，直到全部执行完</li>
+<li>执行浏览器 UI 线程的渲染工作</li>
+<li>检查是否有<code>Web Worker</code>任务，有则执行</li>
+<li>执行下一个宏任务，回到第二步，依此循环，直到宏任务和微任务队列都为空</li>
+</ul>
+<p><strong>微任务包括：</strong><code>MutationObserver</code>、<code>Promise.then()或catch()</code>、<code>Promise为基础开发的其它技术，比如fetch API</code>、<code>V8</code>的垃圾回收过程、<code>Node独有的process.nextTick</code> 、 <code>Object.observe</code>（已废弃；<code>Proxy</code> 对象替代）</p>
+<p><strong>宏任务包括</strong>：<code>script</code> 、<code>setTimeout</code>、<code>setInterval</code> 、<code>setImmediate</code> 、<code>I/O</code> 、<code>UI rendering</code> 、 <code>postMessage</code> 、 <code>MessageChannel</code></p>
+<p><strong>注意：</strong> 下面的题目都是执行在浏览器环境下</p>
+<p>遇到不好理解的，可结合 <a target="_blank" rel="noopener" href="https://github.com/sisterAn/blog/issues/13"><code>promise</code> 源码</a> 进行理解，就很简单了</p>
+<h3 id="1-同步-Promise"><a href="#1-同步-Promise" class="headerlink" title="1. 同步 + Promise"></a>1. 同步 + Promise</h3><h4 id="题目一："><a href="#题目一：" class="headerlink" title="题目一："></a>题目一：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="title function_">resolve</span>()</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>首先明确， <code>Promise</code> 构造函数是同步执行的， <code>then</code> 方法是异步执行的</li>
+<li>开始 <code>new Promise</code> ，执行构造函数同步代码，输出 <code>1</code></li>
+<li>再 <code>resolve()</code>， 将 <code>promise</code> 的状态改为了 <code>resolved</code> ，并且将 <code>resolve</code> 值保存下来，此处没有传值</li>
+<li>执行构造函数同步代码，输出 <code>2</code></li>
+<li>跳出<code>promise</code>，往下执行，碰到 <code>promise.then</code> 这个微任务，将其加入微任务队列</li>
+<li>执行同步代码，输出 <code>4</code></li>
+<li>此时宏任务执行完毕，开始检查微任务队列，执行 <code>promise.then</code> 微任务，输出 <code>3</code></li>
+</ul>
+<h4 id="题目二："><a href="#题目二：" class="headerlink" title="题目二："></a>题目二：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>开始 <code>new Promise</code> ，执行构造函数同步代码，输出 <code>1</code></li>
+<li>再 <code>promise.then</code> ，因为 <code>promise</code>中并没有<code>resolve</code> ，所以 <code>then</code> 方法不会执行</li>
+<li>执行同步代码，输出 <code>3</code></li>
+</ul>
+<h4 id="题目三："><a href="#题目三：" class="headerlink" title="题目三："></a>题目三：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">promise.<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>首先明确， <code>.then</code> 或者 <code>.catch</code> 的参数期望是函数，传入非函数则会发生值透传（ <code>value =&gt; value</code> ）</li>
+<li>开始 <code>new Promise</code> ，执行构造函数同步代码，输出 <code>1</code></li>
+<li>然后 <code>then()</code> 的参数是一个 <code>console.log(2)</code> （注意：并不是一个函数），是立即执行的，输出 <code>2</code></li>
+<li>执行同步代码，输出 <code>3</code></li>
+</ul>
+<h4 id="题目四："><a href="#题目四：" class="headerlink" title="题目四："></a>题目四：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">1</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="number">2</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">3</span>))</span><br><span class="line">  .<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li><code>then(2)</code> 、 <code>then(Promise.resolve(3))</code> 发生了值穿透，直接执行最后一个 <code>then</code> ，输出 <code>1</code></li>
+</ul>
+<h4 id="题目五："><a href="#题目五：" class="headerlink" title="题目五："></a>题目五：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="title function_">resolve</span>()</span><br><span class="line">    <span class="title function_">reject</span>()</span><br><span class="line">&#125;)</span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>开始 <code>new Promise</code> ，执行构造函数同步代码，输出 <code>1</code></li>
+<li>再 <code>resolve()</code>， 将 <code>promise</code> 的状态改为了 <code>resolved</code> ，并且将 <code>resolve</code> 值保存下来，此处没有传值</li>
+<li>再 <code>reject()</code> ，此时 <code>promise</code> 的状态已经改为了 <code>resolved</code> ，不能再重新翻转（状态转变只能是pending —&gt; resolved 或者 pending —&gt; rejected，状态转变不可逆）</li>
+<li>跳出<code>promise</code>，往下执行，碰到 <code>promise.then</code> 这个微任务，将其加入微任务队列</li>
+<li>往下执行，碰到 <code>promise.catch</code> 这个微任务，此时 <code>promise</code> 的状态为 <code>resolved</code> （非 <code>rejected</code> ），忽略 <code>catch</code> 方法</li>
+<li>执行同步代码，输出 <code>4</code></li>
+<li>此时宏任务执行完毕，开始检查微任务队列，执行 <code>promise.then</code> 微任务，输出 <code>2</code></li>
+</ul>
+<h4 id="题目六："><a href="#题目六：" class="headerlink" title="题目六："></a>题目六：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">1</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">  &#125;);</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>首先 <code>resolve(1)</code>， 状态改为了 <code>resolved</code> ，并且将 <code>resolve</code> 值保存下来</li>
+<li>执行 <code>console.log(res)</code> 输出 <code>1</code></li>
+<li>返回 <code>return 2</code> 实际上是包装成了 <code>resolve(2)</code></li>
+<li>状态为 <code>resolved</code> ， <code>catch</code> 方法被忽略</li>
+<li>最后 <code>then</code> ，输出 <code>2</code></li>
+</ul>
+<h3 id="2-同步-Promise-setTimeout"><a href="#2-同步-Promise-setTimeout" class="headerlink" title="2. 同步 + Promise + setTimeout"></a>2. 同步 + Promise + setTimeout</h3><h4 id="题目一：-1"><a href="#题目一：-1" class="headerlink" title="题目一："></a>题目一：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>首先 <code>setTimout</code> 被放入宏任务队列</li>
+<li>再 <code>Promise.resolve().then</code> ， <code>then</code> 方法被放入微任务队列</li>
+<li>执行同步代码，输出 <code>3</code></li>
+<li>此时宏任务执行完毕，开始检查微任务队列，执行 <code>then</code> 微任务，输出 <code>2</code></li>
+<li>微任务队列执行完毕，检查执行一个宏任务</li>
+<li>发现 <code>setTimeout</code> 宏任务，执行输出 <code>1</code></li>
+</ul>
+<h4 id="题目二：-1"><a href="#题目二：-1" class="headerlink" title="题目二："></a>题目二：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">    <span class="title function_">resolve</span>()</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">5</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 5</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>首先明确，当遇到 <code>promise.then</code> 时，如果当前的 <code>Promise</code> 还处于 <code>pending</code> 状态，我们并不能确定调用 <code>resolved</code> 还是 <code>rejected</code> ，只有等待 <code>promise</code> 的状态确定后，再做处理，所以我们需要把我们的两种情况的处理逻辑做成 <code>callback</code> 放入 <code>promise</code> 的回调数组内，当 <code>promise</code> 状态翻转为 <code>resolved</code> 时，才将之前的 <code>promise.then</code> 推入微任务队列</li>
+<li>开始， <code>Promise</code> 构造函数同步执行，输出 <code>1</code> ，执行 <code>setTimeout</code></li>
+<li>将 <code>setTimeout</code> 加入到宏任务队列中</li>
+<li>然后，第一个 <code>promise.then</code> 放入 <code>promise</code> 的回调数组内</li>
+<li>第二个 <code>promise.then</code> 放入 <code>promise</code> 的回调数组内</li>
+<li>执行同步代码，输出 <code>5</code></li>
+<li>检查微任务队列，为空</li>
+<li>检查宏任务队列，执行 <code>setTimeout</code> 宏任务，输入 <code>2</code> ，执行 <code>resolve</code> ， <code>promise</code> 状态翻转为 <code>resolved</code> ，将之前的 <code>promise.then</code> 推入微任务队列</li>
+<li><code>setTimeout</code> 宏任务出队，检查微任务队列</li>
+<li>执行第一个微任务，输出 <code>3</code></li>
+<li>执行第二个微任务，输出 <code>4</code></li>
+</ul>
+<h3 id="回到开头"><a href="#回到开头" class="headerlink" title="回到开头"></a>回到开头</h3><p>现在看，本题就很简单了 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="title class_">Date</span>() </span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date) </span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date)</span><br><span class="line">&#125;, <span class="number">500</span>) </span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date)) </span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">new</span> <span class="title class_">Date</span>() - date &lt; <span class="number">1000</span>) &#123;&#125; </span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">4</span>, <span class="keyword">new</span> <span class="title class_">Date</span>() - date)</span><br></pre></td></tr></table></figure>
+
+<p><strong>解析：</strong></p>
+<ul>
+<li>首先执行同步代码，输出 <code>1 0</code></li>
+<li>遇到 <code>setTimeout</code> ，定时 <code>500ms</code> 后执行，此时，将 <code>setTimeout</code> 交给异步线程，主线程继续执行下一步，异步线程执行 <code>setTimeout</code></li>
+<li>主线程执行 <code>Promise.resolve().then</code> , <code>.then</code> 的参数不是函数，发生值透传（ <code>value =&gt; value</code> ） ，输出 <code>3 1</code></li>
+<li>主线程继续执行同步任务 <code>whlie</code> ，等待 <code>1000ms</code> ，在此期间，<code>setTimeout</code> 定时 <code>500ms</code> 完成，异步线程将 <code>setTimeout</code> 回调事件放入宏任务队列中</li>
+<li>继续执行下一步，输出 <code>4 1000</code></li>
+<li>检查微任务队列，为空</li>
+<li>检查宏任务队列，执行 <code>setTimeout</code> 宏任务，输入 <code>2 1000</code></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><code>Promise</code> 构造函数是同步执行的， <code>then</code> 方法是异步执行的</li>
+<li><code>.then</code> 或者 <code>.catch</code> 的参数期望是函数，传入非函数则会发生值透传</li>
+<li><code>Promise</code>的状态一经改变就不能再改变，构造函数中的 <code>resolve</code> 或 <code>reject</code> 只有第一次执行有效，多次调用没有任何作用</li>
+<li><code>.then</code>方法是能接收两个参数的，第一个是处理成功的函数，第二个是处理失败的函数，再某些时候你可以认为<code>catch</code>是<code>.then</code>第二个参数的简便写法</li>
+<li>当遇到 <code>promise.then</code> 时， 如果当前的 <code>Promise</code> 还处于 <code>pending</code> 状态，我们并不能确定调用 <code>resolved</code> 还是 <code>rejected</code> ，只有等待 <code>promise</code> 的状态确定后，再做处理，所以我们需要把我们的两种情况的处理逻辑做成 <code>callback</code> 放入 <code>promise</code> 的回调数组内，当 <code>promise</code> 状态翻转为 <code>resolved</code> 时，才将之前的 <code>promise.then</code> 推入微任务队列</li>
+</ul>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>Thanks<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
+      </a>
+    </div>
+    
 
+    
 
-        <div class="article-info info-on-right">
-          
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -272,420 +466,130 @@
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/01/28/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-5/" class="archive-article-date">
-        <time datetime="2023-01-27T16:53:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-28</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/01/28/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">每日进阶</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/01/28/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-5/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" class="archive-article-date">
-        <time datetime="2023-01-12T10:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-12</time>
-</a>
 
-        </div>
-    	 
+
+
+
+
+
+
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" target="_blank">每日进阶</a>
+  <div id="gitment-ctn"></div>
   
-    </h1>
+    <!-- 中文 -->
+    <link rel="stylesheet" href="/lib/gitment.css">
+    <script src="/lib/gitment.js"></script>
+  
+  <script>
+    <!-- id: "每日进阶" -->
+    var gitment = new Gitment({
+      id: "20230217011058",
+      owner: 'kaifagi',
+      repo: 'yilia-plus-demo',
+      oauth: {
+        client_id: 'a08bcf21b1f6cc374051',
+        client_secret: 'cb1e64f131a1ff84f4db37041d37b2c2864206e6',
+      },
+    })
+    gitment.render('gitment-ctn')
+  </script>
+
+
   
 
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/" class="archive-article-date">
-        <time datetime="2022-12-22T06:34:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/11/04/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" class="archive-article-date">
-        <time datetime="2022-11-04T10:28:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/11/04/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" target="_blank">FreeCodeCamp刷题笔记（五）</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/10/18/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-2/" class="archive-article-date">
-        <time datetime="2022-10-18T10:10:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-10-18</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/10/18/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-2/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/09/26/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
-        <time datetime="2022-09-26T08:19:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-26</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/09/26/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" target="_blank">FreeCodeCamp刷题笔记（四）</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/09/13/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-1/" class="archive-article-date">
-        <time datetime="2022-09-13T09:04:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/09/13/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-1/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/08/29/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6/" class="archive-article-date">
-        <time datetime="2022-08-29T09:18:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-29</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/08/29/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/08/15/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
-        <time datetime="2022-08-15T10:37:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-15</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/08/15/FreeCodeCamp%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" target="_blank">FreeCodeCamp刷题笔记（三）</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -726,8 +630,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
