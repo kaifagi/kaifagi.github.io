@@ -6,17 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: 前端进阶 | Hexo</title>
+  <title>每日进阶 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/%E5%89%8D%E7%AB%AF%E8%BF%9B%E9%98%B6/index.html">
+  <meta name="description" content="讲下 V8 sort 的大概思路，并手写一个 sort 的实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日进阶">
+<meta property="og:url" content="http://example.com/2023/03/03/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-7/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="讲下 V8 sort 的大概思路，并手写一个 sort 的实现">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://resource.muyiy.cn/image/20200812004706.png">
+<meta property="og:image" content="http://resource.muyiy.cn/image/20210419075103.jpg">
+<meta property="og:image" content="http://resource.muyiy.cn/image/20210419075132">
+<meta property="article:published_time" content="2023-03-03T12:06:44.000Z">
+<meta property="article:modified_time" content="2023-04-06T11:15:00.919Z">
 <meta property="article:author" content="Codebeyound">
+<meta property="article:tag" content="前端进阶">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://resource.muyiy.cn/image/20200812004706.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -226,41 +235,161 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-每日进阶-7" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+    <h1 class="article-title" itemprop="name">
+      每日进阶
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2023/03/03/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-7/" class="archive-article-date">
         <time datetime="2023-03-03T12:06:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-03</time>
 </a>
 
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">8分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="讲下-V8-sort-的大概思路，并手写一个-sort-的实现"><a href="#讲下-V8-sort-的大概思路，并手写一个-sort-的实现" class="headerlink" title="讲下 V8 sort 的大概思路，并手写一个 sort 的实现"></a>讲下 V8 sort 的大概思路，并手写一个 sort 的实现</h1><span id="more"></span>
+
+<p><img src="http://resource.muyiy.cn/image/20200812004706.png"></p>
+<p>以上是常见的几种排序算法，首先思考一下， <code>Array.prototype.sort()</code> 使用了上面的那种算法喃？ </p>
+<h2 id="Array-prototype-sort"><a href="#Array-prototype-sort" class="headerlink" title="Array.prototype.sort()"></a>Array.prototype.sort()</h2><blockquote>
+<p><code>sort()</code> 方法用<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/In-place_algorithm">原地算法</a>对数组的元素进行排序，并返回数组。默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的</p>
+<p>— MDN</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array = [<span class="number">1</span>, <span class="number">30</span>, <span class="number">4</span>, <span class="number">21</span>, <span class="number">100000</span>];</span><br><span class="line">array.<span class="title function_">sort</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(array);</span><br><span class="line"><span class="comment">// [1, 100000, 21, 30, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>];</span><br><span class="line">numbers.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(numbers)</span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="V8-中的-Array-prototype-sort"><a href="#V8-中的-Array-prototype-sort" class="headerlink" title="V8 中的 Array.prototype.sort()"></a>V8 中的 Array.prototype.sort()</h2><p>关于 <code>Array.prototype.sort()</code> ，ES 规范并没有指定具体的算法，在 V8 引擎中， <strong>7.0 版本之前</strong> ，数组长度小于10时， <code>Array.prototype.sort()</code> 使用的是插入排序，否则用快速排序。</p>
+<p>在 V8 引擎 <strong>7.0 版本之后</strong> 就舍弃了快速排序，因为它不是稳定的排序算法，在最坏情况下，时间复杂度会降级到 O(n2)。</p>
+<p>于是采用了一种混合排序的算法：<strong>TimSort</strong> 。</p>
+<p>这种功能算法最初用于Python语言中，严格地说它不属于以上10种排序算法中的任何一种，属于一种混合排序算法：</p>
+<p>在数据量小的子数组中使用<strong>插入排序</strong>，然后再使用<strong>归并排序</strong>将有序的子数组进行合并排序，时间复杂度为 <code>O(nlogn)</code> 。</p>
+<p><img src="http://resource.muyiy.cn/image/20210419075103.jpg"></p>
+<h2 id="什么是-TimSort-？"><a href="#什么是-TimSort-？" class="headerlink" title="什么是 TimSort ？"></a>什么是 TimSort ？</h2><p>在 解答 v8 sort 源码前，我们先看看 TimSort 具体是如何实现的，帮助我们阅读源码</p>
+<p>Timsort 是 Tim Peter 在 2001 年为 Python 语言特意创造的，主要是 <strong>基于现实数据集中存在者大量的有序元素（不需要重新排序）</strong> 。 Timsort 会遍历所有数据，找出数据中所有有序的分区（run），然后按照一定的规则将这些分区（run）归并为一个。</p>
+<p>具体过程为：</p>
+<ul>
+<li>扫描数组，并寻找所谓的 <code>_runs_</code> ，一个 run 可以认为是已经排序的小数组，也包括以逆向排序的，因为这些数组可以简单地翻转（reverse）就成为一个run</li>
+<li>确定最小 run 长度，小于的 run 会通过 <strong>插入排序</strong> 归并成长度高于最小长度的 run</li>
+<li>反复归并一些相邻 run ，过程中避免归并长度相差很大的片段，直至整个排序完成</li>
+</ul>
+<p>如何避免归并长度相差很大 run 呢？在 Timsort 排序过程中，会存在一个栈用于记录每个 run 的起始索引位置与长度， 依次将 run 压入栈中，若栈顶 A 、B、C 的长度</p>
+<ul>
+<li><code>|C| &gt; |B| + |A|</code></li>
+<li><code>|B| &gt; |A|</code></li>
+</ul>
+<p><img src="http://resource.muyiy.cn/image/20210419075132"></p>
+<p>在上图的例子中，因为 <code>| A |&gt; | B |</code> ，所以B被合并到了它前后两个runs（A、C）中较小的一个 <code>| A |</code> ，然后 <code>| A |</code> 再与 <code>| C |</code> 。 依据这个法则，能够尽量使得大小相同的 run 合并，以提高性能。注意Timsort是稳定排序故只有相邻的 run 才能归并。</p>
+<p>所以，对于已经排序好的数组，会以 O(n) 的时间内完成排序，因为这样的数组将只产生单个 run ，不需要合并操作。最坏的情况是 O(n log n) 。这样的算法性能参数，以及 Timsort 天生的稳定性是我们最终选择 Timsort 而非 Quicksort 的几个原因。</p>
+<h2 id="手写一个-Array-prototype-sort-实现"><a href="#手写一个-Array-prototype-sort-实现" class="headerlink" title="手写一个 Array.prototype.sort() 实现"></a>手写一个 Array.prototype.sort() 实现</h2><p>了解的 Timsort 的基本思想与排序过程后，我们手写一个简易版的 Timsort ： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 顺序合并两个小数组left、right 到 result</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">merge</span>(<span class="params">left, right</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> result = [],</span><br><span class="line">      ileft = <span class="number">0</span>,</span><br><span class="line">      iright = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(ileft &lt; left.<span class="property">length</span> &amp;&amp; iright &lt; right.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(left[ileft] &lt; right[iright])&#123;</span><br><span class="line">      result.<span class="title function_">push</span>(left[ileft ++])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.<span class="title function_">push</span>(right[iright ++])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(ileft &lt; left.<span class="property">length</span>) &#123;</span><br><span class="line">    result.<span class="title function_">push</span>(left[ileft ++])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(iright &lt; right.<span class="property">length</span>) &#123;</span><br><span class="line">    result.<span class="title function_">push</span>(right[iright ++])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入排序</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">insertionSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> n = arr.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">let</span> preIndex, current;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        preIndex = i - <span class="number">1</span>;</span><br><span class="line">        current = arr[i];</span><br><span class="line">        <span class="keyword">while</span> (preIndex &gt;= <span class="number">0</span> &amp;&amp; arr[preIndex] &gt; current) &#123;</span><br><span class="line">            arr[preIndex + <span class="number">1</span>] = arr[preIndex];</span><br><span class="line">            preIndex--;</span><br><span class="line">        &#125;</span><br><span class="line">        arr[preIndex + <span class="number">1</span>] = current;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// timsort</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">timsort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="comment">// 空数组或数组长度小于 2，直接返回</span></span><br><span class="line">    <span class="keyword">if</span>(!arr || arr.<span class="property">length</span> &lt; <span class="number">2</span>) <span class="keyword">return</span> arr</span><br><span class="line">    <span class="keyword">let</span> runs = [], </span><br><span class="line">        sortedRuns = [],</span><br><span class="line">        newRun = [arr[<span class="number">0</span>]],</span><br><span class="line">        length = arr.<span class="property">length</span></span><br><span class="line">    <span class="comment">// 划分 run 区，并存储到 runs 中，这里简单的按照升序划分，没有考虑降序的run</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &lt; arr[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            runs.<span class="title function_">push</span>(newRun)</span><br><span class="line">            newRun = [arr[i]]</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            newRun.<span class="title function_">push</span>(arr[i])</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(length - <span class="number">1</span> === i) &#123;</span><br><span class="line">            runs.<span class="title function_">push</span>(newRun)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 由于仅仅是升序的run，没有涉及到run的扩充和降序的run，因此，其实这里没有必要使用 insertionSort 来进行 run 自身的排序</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> run <span class="keyword">of</span> runs) &#123;</span><br><span class="line">        <span class="title function_">insertionSort</span>(run)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 合并 runs</span></span><br><span class="line">    sortedRuns = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> run <span class="keyword">of</span> runs) &#123;</span><br><span class="line">        sortedRuns = <span class="title function_">merge</span>(sortedRuns, run)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sortedRuns</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line"><span class="title function_">timsort</span>(numbers)</span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+
+<p>简易版的，完整的实现可以查看 <a target="_blank" rel="noopener" href="https://github.com/v8/v8/blob/master/third_party/v8/builtins/array-sort.tq">v8 array-sort </a> 实现，下面我们就来看一下</p>
+<h2 id="v8-中的-Array-prototype-sort-源码解读"><a href="#v8-中的-Array-prototype-sort-源码解读" class="headerlink" title="v8 中的 Array.prototype.sort() 源码解读"></a>v8 中的 Array.prototype.sort() 源码解读</h2><p>即 TimSort 在 v8 中的实现，具体实现步骤如下：</p>
+<ol>
+<li>判断数组长度，小于2直接返回，不排序</li>
+<li>开始循环</li>
+<li>找出一个有序子数组，我们称之为 “run” ，长度 currentRunLength</li>
+<li>计算最小合并序列长度 minRunLength （这个值会根据数组长度动态变化，在32~64之间）</li>
+<li>比较 currentRunLength 和 minRunLength ，如果 currentRunLength &gt;&#x3D; minRunLength ，否则采用插入排序补足数组长度至 minRunLength ，将 run 压入栈 pendingRuns 中</li>
+<li>每次有新的 run 被压入 pendingRuns 时保证栈内任意 3 个连续的 run（run0, run1, run2）从下至上满足run0 &gt; run1 + run2 &amp;&amp; run1 &gt; run2 ，不满足的话进行调整直至满足</li>
+<li>如果剩余子数组为 0 ，结束循环</li>
+<li>合并栈中所有 run，排序结束</li>
+</ol>
+<h3 id="核心源码解读"><a href="#核心源码解读" class="headerlink" title="核心源码解读"></a>核心源码解读</h3><p>下面重点解读 3 个核心函数：</p>
+<ul>
+<li><code>ComputeMinRunLength</code> ：用来计算 <code>minRunLength</code></li>
+<li><code>CountAndMakeRun</code> ：计算第一个 <code>run</code> 的长度</li>
+<li><code>MergeCollapse</code> ：调整 <code>pendingRuns</code> ，使栈长度大于 <code>3</code> 时，所有 <code>run</code> 都满足 <code>run[n]&gt;run[n+1]+run[n+2]</code> 且 <code>run[n+1]&gt;run2[n+2]</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算最小合并序列长度 minRunLength</span></span><br><span class="line">macro <span class="title class_">ComputeMinRunLength</span>(<span class="attr">nArg</span>: <span class="title class_">Smi</span>): <span class="title class_">Smi</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> <span class="attr">n</span>: <span class="title class_">Smi</span> = nArg;</span><br><span class="line">  <span class="keyword">let</span> <span class="attr">r</span>: <span class="title class_">Smi</span> = <span class="number">0</span>;  <span class="comment">// Becomes 1 if any 1 bits are shifted off.</span></span><br><span class="line"></span><br><span class="line">  <span class="title function_">assert</span>(n &gt;= <span class="number">0</span>);</span><br><span class="line">  <span class="comment">// 如果小于 64 ，则返回n（该值太小，无法打扰那些奇特的东西）</span></span><br><span class="line">  <span class="comment">// 否则不断除以2，得到结果在 32~64 之间</span></span><br><span class="line">  <span class="keyword">while</span> (n &gt;= <span class="number">64</span>) &#123;</span><br><span class="line">    r = r | (n &amp; <span class="number">1</span>);</span><br><span class="line">    n = n &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">minRunLength</span>: <span class="title class_">Smi</span> = n + r;</span><br><span class="line">  <span class="title function_">assert</span>(nArg &lt; <span class="number">64</span> || (<span class="number">32</span> &lt;= minRunLength &amp;&amp; minRunLength &lt;= <span class="number">64</span>));</span><br><span class="line">  <span class="keyword">return</span> minRunLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算第一个 run 的长度</span></span><br><span class="line">macro <span class="title class_">CountAndMakeRun</span>(implicit <span class="attr">context</span>: <span class="title class_">Context</span>, <span class="attr">sortState</span>: <span class="title class_">SortState</span>)(</span><br><span class="line">    <span class="attr">lowArg</span>: <span class="title class_">Smi</span>, <span class="attr">high</span>: <span class="title class_">Smi</span>): <span class="title class_">Smi</span> &#123;</span><br><span class="line">  <span class="title function_">assert</span>(lowArg &lt; high);</span><br><span class="line">  <span class="comment">// 这里保存的才是我们传入的数组数据</span></span><br><span class="line">  <span class="keyword">const</span> workArray = sortState.<span class="property">workArray</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">low</span>: <span class="title class_">Smi</span> = lowArg + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (low == high) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">runLength</span>: <span class="title class_">Smi</span> = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> elementLow = <span class="title class_">UnsafeCast</span>&lt;<span class="title class_">JSAny</span>&gt;(workArray.<span class="property">objects</span>[low]);</span><br><span class="line">  <span class="keyword">const</span> elementLowPred = <span class="title class_">UnsafeCast</span>&lt;<span class="title class_">JSAny</span>&gt;(workArray.<span class="property">objects</span>[low - <span class="number">1</span>]);</span><br><span class="line">  <span class="comment">// 调用比对函数来比对数据</span></span><br><span class="line">  <span class="keyword">let</span> order = sortState.<span class="title class_">Compare</span>(elementLow, elementLowPred);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// TODO(szuend): Replace with &quot;order &lt; 0&quot; once Torque supports it.</span></span><br><span class="line">  <span class="comment">//               Currently the operator&lt;(Number, Number) has return type</span></span><br><span class="line">  <span class="comment">//               &#x27;never&#x27; and uses two labels to branch.</span></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">isDescending</span>: bool = order &lt; <span class="number">0</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">previousElement</span>: <span class="title class_">JSAny</span> = elementLow;</span><br><span class="line">  <span class="comment">// 遍历子数组并计算 run 的长度</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> <span class="attr">idx</span>: <span class="title class_">Smi</span> = low + <span class="number">1</span>; idx &lt; high; ++idx) &#123;</span><br><span class="line">    <span class="keyword">const</span> currentElement = <span class="title class_">UnsafeCast</span>&lt;<span class="title class_">JSAny</span>&gt;(workArray.<span class="property">objects</span>[idx]);</span><br><span class="line">    order = sortState.<span class="title class_">Compare</span>(currentElement, previousElement);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isDescending) &#123;</span><br><span class="line">      <span class="keyword">if</span> (order &gt;= <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (order &lt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    previousElement = currentElement;</span><br><span class="line">    ++runLength;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isDescending) &#123;</span><br><span class="line">    <span class="title class_">ReverseRange</span>(workArray, lowArg, lowArg + runLength);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> runLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调整 pendingRuns ，使栈长度大于3时，所有 run 都满足 run[n]&gt;run[n+1]+run[n+2] 且 run[n+1]&gt;run2[n+2]</span></span><br><span class="line">transitioning macro <span class="title class_">MergeCollapse</span>(<span class="attr">context</span>: <span class="title class_">Context</span>, <span class="attr">sortState</span>: <span class="title class_">SortState</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">pendingRuns</span>: <span class="title class_">FixedArray</span> = sortState.<span class="property">pendingRuns</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Reload the stack size because MergeAt might change it.</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="title class_">GetPendingRunsSize</span>(sortState) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">n</span>: <span class="title class_">Smi</span> = <span class="title class_">GetPendingRunsSize</span>(sortState) - <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title class_">RunInvariantEstablished</span>(pendingRuns, n + <span class="number">1</span>) ||</span><br><span class="line">        !<span class="title class_">RunInvariantEstablished</span>(pendingRuns, n)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="title class_">GetPendingRunLength</span>(pendingRuns, n - <span class="number">1</span>) &lt;</span><br><span class="line">          <span class="title class_">GetPendingRunLength</span>(pendingRuns, n + <span class="number">1</span>)) &#123;</span><br><span class="line">        --n;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="title class_">MergeAt</span>(n); <span class="comment">// 将第 n 个 run 和第 n+1 个 run 进行合并</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (</span><br><span class="line">        <span class="title class_">GetPendingRunLength</span>(pendingRuns, n) &lt;=</span><br><span class="line">        <span class="title class_">GetPendingRunLength</span>(pendingRuns, n + <span class="number">1</span>)) &#123;</span><br><span class="line">      <span class="title class_">MergeAt</span>(n); <span class="comment">// 将第 n 个 run 和第 n+1 个 run 进行合并</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>Thanks<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/03/03/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-7/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
+      </a>
+    </div>
+    
 
+    
 
-        <div class="article-info info-on-right">
-          
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -272,330 +401,130 @@
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/03/03/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-7/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/" class="archive-article-date">
-        <time datetime="2023-02-16T17:10:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-17</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">每日进阶</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/02/17/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-6/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/01/28/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-5/" class="archive-article-date">
-        <time datetime="2023-01-27T16:53:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-28</time>
-</a>
 
-        </div>
-    	 
+
+
+
+
+
+
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/01/28/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-5/" target="_blank">每日进阶</a>
+  <div id="gitment-ctn"></div>
   
-    </h1>
+    <!-- 中文 -->
+    <link rel="stylesheet" href="/lib/gitment.css">
+    <script src="/lib/gitment.js"></script>
+  
+  <script>
+    <!-- id: "每日进阶" -->
+    var gitment = new Gitment({
+      id: "20230303200644",
+      owner: 'kaifagi',
+      repo: 'yilia-plus-demo',
+      oauth: {
+        client_id: 'a08bcf21b1f6cc374051',
+        client_secret: 'cb1e64f131a1ff84f4db37041d37b2c2864206e6',
+      },
+    })
+    gitment.render('gitment-ctn')
+  </script>
+
+
   
 
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" class="archive-article-date">
-        <time datetime="2023-01-12T10:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/01/12/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-4/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/" class="archive-article-date">
-        <time datetime="2022-12-22T06:34:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/12/22/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-3/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/10/18/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-2/" class="archive-article-date">
-        <time datetime="2022-10-18T10:10:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-10-18</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/10/18/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-2/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/09/13/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-1/" class="archive-article-date">
-        <time datetime="2022-09-13T09:04:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-09-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/09/13/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6-1/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/08/29/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6/" class="archive-article-date">
-        <time datetime="2022-08-29T09:18:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-29</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/08/29/%E6%AF%8F%E6%97%A5%E8%BF%9B%E9%98%B6/" target="_blank">每日进阶</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -636,9 +565,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
